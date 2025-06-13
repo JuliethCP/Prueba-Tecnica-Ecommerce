@@ -10,7 +10,6 @@ import { AuthContext } from '../../context/authContext';
 export default function CreateProductPage() {
     const { user } = useContext(AuthContext); 
     const router = useRouter();
-
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');

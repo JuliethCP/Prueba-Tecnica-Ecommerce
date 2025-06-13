@@ -13,7 +13,6 @@ export default function EditProductPage() {
 
     const { user } = useContext(AuthContext); 
     const [product, setProduct] = useState(null);
-
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');

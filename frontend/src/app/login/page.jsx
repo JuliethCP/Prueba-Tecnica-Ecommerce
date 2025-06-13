@@ -37,43 +37,45 @@ export default function Login() {
     return (
         <>
         <Navbar />
-        <div className="container mt-5 pt-5">
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <div className="mb-3">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Password</label>
-                    <div className="input-group">
+        <div className="d-flex justify-content-center align-items-center vh-100">
+            <div className="shadow rounded p-5" style={{ width: "100%", maxWidth: "500px" }}>
+                <h2 className="text-center mb-4">Login</h2>
+                <form onSubmit={handleLogin}>
+                    <div className="mb-3">
+                        <label className="form-label">Email</label>
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type="email"
                             className="form-control"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
-                        <button
-                            type="button"
-                            className="btn btn-outline-secondary"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            {showPassword ? "Hide" : "Show"}
-                        </button>
                     </div>
-                </div>
-                <button type="submit" className="btn btn-primary">Sign In</button>
-            </form>
-            <p className="mt-3">
-                Don’t have an account? <Link href="/register">Register</Link>
-            </p>
+                    <div className="mb-3">
+                        <label className="form-label">Password</label>
+                        <div className="input-group">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className="form-control"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="btn btn-outline-secondary"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? "Hide" : "Show"}
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100">Sign In</button>
+                </form>
+                <p className="mt-3 text-center">
+                    Don’t have an account? <Link href="/register">Register</Link>
+                </p>
+            </div>
         </div>
         </>
     );

@@ -25,8 +25,14 @@ export default function Navbar() {
                     <div className="d-flex align-items-center justify-content-end" style={{ flexGrow: 1 }}>
                         {user && (
                             <Link href="/cart" className="btn btn-outline-light me-2" id="btnMyCart">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    className="bi bi-cart-fill" viewBox="0 0 16 16">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    className="bi bi-cart-fill me-2" 
+                                    viewBox="0 0 16 16"
+                                >
                                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 
           0 0 1 .485.379L2.89 3H14.5a.5.5 
           0 0 1 .491.592l-1.5 8A.5.5 0 0 
@@ -64,9 +70,21 @@ export default function Navbar() {
                             </Link>
                         ) : (
                             <>
-                                <span className="text-white me-3">Hello, {user.name}</span>
+                                <span className="text-white me-3 d-flex align-items-center">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        fill="currentColor"
+                                        className="bi bi-person-circle me-2"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path d="M13.468 12.37C12.758 11.226 11.482 10.5 10 10.5c-1.482 0-2.758.726-3.468 1.87A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63zM8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 1a7 7 0 1 0 0 14A7 7 0 0 0 8 10z" />
+                                    </svg>
+                                    Hello, {user.name}
+                                </span>
                                 <button
-                                    className="btn btn-danger me-3 px-4 py-2"
+                                    className="btn btn-danger px-4 py-2 mx-3" 
                                     style={{ borderRadius: '20px' }}
                                     onClick={logout}
                                 >

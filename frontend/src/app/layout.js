@@ -5,6 +5,7 @@ import BootstrapClient from './components/BootstrapClient';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from './context/authContext';
+import { CartProvider } from './context/cartContext';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +27,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
       <AuthProvider>
+      <CartProvider>
         {children}
         <BootstrapClient />
         <ToastContainer />
+      </CartProvider>
         </AuthProvider>
       </body>
     </html>
