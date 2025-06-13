@@ -1,7 +1,5 @@
 # Prueba-Tecnica-Ecommerce
 
-# Ecommerce Platform
-
 ## Descripción del Proyecto
 Este es un proyecto de comercio electrónico de productos relacionados con el mundo del K POP, este sistema permite a los usuarios explorar productos, añadirlos a un carrito de compras y comprarlos. El sistema incluye un frontend desarrollado con Next.js y un backend construido con Node.js, Express y Prisma para la gestión de la base de datos.
 
