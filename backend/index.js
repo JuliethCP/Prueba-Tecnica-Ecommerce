@@ -6,6 +6,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const productRoutes = require("./routes/products");
+
+app.use("/api/products", productRoutes);
+
 app.get("/", (req, res) => res.send("API funcionando"));
 
 const PORT = process.env.PORT || 4000;
