@@ -47,12 +47,12 @@ Este es un proyecto de comercio electrónico de productos relacionados con el mu
      DATABASE_URL=postgresql://<USUARIO>:<CONTRASEÑA>@<HOST>:<PUERTO>/<NOMBRE_BASE_DE_DATOS>
      ```
 
-4. Ejecuta las migraciones de la base de datos (esto creará las tablas necesarias para trabajar):
+4. Ejecuta las migraciones de la base de datos (esto creará las tablas necesarias para trabajar). Puedes consultar más detalles en la sección [Scripts de Configuración](#scripts-de-configuración):
    ```bash
    npx prisma migrate dev
    ```
 
-5. Abrir su administrador de base de datos ya sea PdAdmin u otros y ejecuta el archivo insert products.sql ubicado en la raiz del proyecto.
+5. Utiliza un administrador de base de datos como pgAdmin u otro de tu preferencia para ejecutar el archivo `insert-products.sql`, ubicado en la raíz del proyecto. Este archivo insertará los productos iniciales en la base de datos.
 
 6. Inicia el servidor:
    ```bash
