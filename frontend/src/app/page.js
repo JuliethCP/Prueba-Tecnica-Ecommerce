@@ -112,7 +112,7 @@ export default function Home() {
                             <option value="All">All the groups</option>
                             <option value="blackpink">BLACKPINK</option>
                             <option value="le sserafim">LE SSERAFIM</option>
-                            <option value="g idle">(G)I-DLE</option>
+                            <option value="(g)i-dle">(G)I-DLE</option>
                             <option value="new jeans">NewJeans</option>
                         </select>
                     </div>

@@ -14,6 +14,7 @@ export default function CreateAdminPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         if (!user) {
@@ -29,8 +30,29 @@ export default function CreateAdminPage() {
         }
     }, [user, router]);
 
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (name.trim().length < 3) {
+            toast.error('Name must be at least 3 characters long');
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            toast.error('Please enter a valid email address');
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error('Password must be at least 6 characters long');
+            return;
+        }
+
         try {
             const res = await fetch('http://localhost:4000/api/auth/register-admin', {
                 method: 'POST',
@@ -59,25 +81,56 @@ export default function CreateAdminPage() {
 
     return (
         <>
-        <Navbar />
-        <div className="container mt-5 pt-5">
-            <h2>Create New Admin</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label>Name</label>
-                    <input type="text" className="form-control" value={name} required onChange={(e) => setName(e.target.value)} />
+            <Navbar />
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className="shadow rounded p-5" style={{ width: "100%", maxWidth: "500px" }}>
+                    <h2 className="text-center mb-4">Create New Admin</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label className="form-label">Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Email</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label className="form-label">Password</label>
+                            <div className="input-group">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    className="form-control"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? "Hide" : "Show"}
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100">
+                            Create Admin
+                        </button>
+                    </form>
                 </div>
-                <div className="mb-3">
-                    <label>Email</label>
-                    <input type="email" className="form-control" value={email} required onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="mb-3">
-                    <label>Password</label>
-                    <input type="password" className="form-control" value={password} required onChange={(e) => setPassword(e.target.value)} />
-                </div>
-                <button type="submit" className="btn btn-primary">Create Admin</button>
-            </form>
-        </div>
+            </div>
         </>
     );
 }

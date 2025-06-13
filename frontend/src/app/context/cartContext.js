@@ -9,7 +9,8 @@ export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [userId, setUserId] = useState(null);
 
-    // Detectar usuario y cargar el carrito del backend si está logueado
+
+    //  Detect user and load cart from backend if logged in
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) return;
@@ -38,7 +39,7 @@ export const CartProvider = ({ children }) => {
             }));
             setCart(formatted);
         } catch (err) {
-            console.error('❌ Error loading cart from backend');
+            console.error('Error loading cart from backend');
         }
     };
 
@@ -55,7 +56,7 @@ export const CartProvider = ({ children }) => {
                 body: JSON.stringify({ productId, quantity })
             });
         } catch (err) {
-            console.error('❌ Error syncing cart with backend');
+            console.error('Error syncing cart with backend');
         }
     };
 
@@ -89,7 +90,7 @@ export const CartProvider = ({ children }) => {
 
             setCart(prev => prev.filter(p => p.id !== id));
         } catch (err) {
-            console.error('❌ Error removing item from backend');
+            console.error('Error removing item from backend');
         }
     };
 
@@ -115,7 +116,42 @@ export const CartProvider = ({ children }) => {
 
             setCart([]);
         } catch (err) {
-            console.error('❌ Error clearing cart in backend');
+            console.error('Error clearing cart in backend');
+        }
+    };
+
+    const purchaseCart = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('User is not authenticated');
+            return;
+        }
+
+        try {
+            const res = await fetch('http://localhost:4000/api/products/purchase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                },
+                body: JSON.stringify({
+                    items: cart.map(item => ({
+                        productId: item.id,
+                        quantity: item.quantity,
+                    })),
+                }),
+            });
+
+            if (res.ok) {
+                setCart([]); // Vaciar el carrito en el frontend
+                console.log('Purchase successful');
+            } else {
+                const data = await res.json();
+                console.error('Purchase failed:', data.message);
+            }
+        } catch (err) {
+            toast.error('Error processing purchase');
+            console.error('Error processing purchase:', err);
         }
     };
 
@@ -124,7 +160,7 @@ export const CartProvider = ({ children }) => {
     }, [cart]);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
+        <CartContext.Provider value={{ cart, setCart, addToCart, removeFromCart, updateQuantity, clearCart, purchaseCart }}>
             {children}
         </CartContext.Provider>
     );

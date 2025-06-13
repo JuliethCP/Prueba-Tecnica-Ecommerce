@@ -14,8 +14,23 @@ export default function Login() {
     const router = useRouter();
     const { login } = useContext(AuthContext); 
 
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
+
+        if (!validateEmail(email)) {
+            toast.error("Please enter a valid email address");
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error("Password must be at least 6 characters long");
+            return;
+        }
 
         const res = await fetch("http://localhost:4000/api/auth/login", {
             method: "POST",

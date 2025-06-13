@@ -78,4 +78,47 @@ router.put('/:id', authenticateToken, authorizeRoles('admin'), async (req, res) 
     }
 });
 
+router.post('/purchase', authenticateToken, async (req, res) => {
+    const { items } = req.body; // products to purchase with productId and quantity
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({ message: 'No items provided for purchase' });
+    }
+
+    try {
+        // Verify the stock for each product
+        for (const item of items) {
+            const product = await prisma.product.findUnique({
+                where: { id: item.productId },
+            });
+
+            if (!product) {
+                return res.status(404).json({ message: `Product with ID ${item.productId} not found` });
+            }
+
+            if (product.stock < item.quantity) {
+                return res.status(400).json({ message: `Insufficient stock for product: ${product.name}` });
+            }
+        }
+
+        // Reduce the stock for each product
+        for (const item of items) {
+            await prisma.product.update({
+                where: { id: item.productId },
+                data: { stock: { decrement: item.quantity } }, // Subtract stock
+            });
+        }
+
+        // Clear the cart for the user
+        await prisma.cart.deleteMany({
+            where: { userId: req.user.id },
+        });
+
+        res.status(200).json({ message: 'Purchase successful and cart cleared' });
+    } catch (err) {
+        console.error('Error processing purchase:', err);
+        res.status(500).json({ message: 'Error processing purchase' });
+    }
+});
+
 module.exports = router;

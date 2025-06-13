@@ -26,7 +26,7 @@ model Product {
   imageUrl    String
   stock       Int
 
-  carts       Cart[]   @relation("ProductToCart") // Relación con el modelo Cart
+  carts       Cart[]   @relation("ProductToCart") 
 }
 
 model Cart {

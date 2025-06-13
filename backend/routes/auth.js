@@ -8,7 +8,7 @@ const generateToken = require('../utils/generateToken');
 
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; // use env var in production
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; 
 
 // Register
 router.post('/register', async (req, res) => {
@@ -31,8 +31,7 @@ router.post('/register', async (req, res) => {
             },
         });
 
-        const token = generateToken(newUser); // Usar generateToken
-
+        const token = generateToken(newUser); 
         res.status(201).json({ token });
     } catch (error) {
         console.error('Register error:', error);
@@ -79,7 +78,7 @@ router.post('/login', async (req, res) => {
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) return res.status(400).json({ message: 'Invalid credentials' });
 
-        const token = generateToken(user); // Usar generateToken
+        const token = generateToken(user); 
 
         res.status(200).json({ token });
     } catch (error) {

@@ -7,11 +7,21 @@ const prisma = new PrismaClient();
 
 router.get('/', authenticateToken, async (req, res) => {
     try {
-        const cart = await prisma.cart.findMany({
+        const cartItems = await prisma.cart.findMany({
             where: { userId: req.user.id },
             include: { product: true }
         });
-        res.json(cart);
+
+        const cart = cartItems.map(item => ({
+            id: item.id,
+            productId: item.productId,
+            name: item.product.name,
+            price: item.product.price,
+            imageUrl: item.product.imageUrl,
+            quantity: item.quantity
+        }));
+
+        res.json({ items: cart });
     } catch (err) {
         res.status(500).json({ message: 'Error getting cart' });
     }
